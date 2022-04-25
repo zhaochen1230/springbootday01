@@ -41,6 +41,10 @@ public class ProviderController {
     private StringRedisTemplate stringRedisTemplate;
 
 
+    //测试
+    private String username;
+
+
 
 
     //翻页排序
