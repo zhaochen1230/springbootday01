@@ -40,7 +40,6 @@ public class ProviderController {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-
     //翻页排序
     @RequestMapping(value = "/findProviderList", method = RequestMethod.GET)
     @ResponseBody
