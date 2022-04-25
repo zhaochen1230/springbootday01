@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hz.springbootday01.dao.ProviderDao">
+    <cache eviction="FIFO" flushInterval="10000" size="512" readOnly="true"/>
+
+    <sql id="provider_where">
+        <where>
+            <if test="proName!=null">proName like concat('%',#{proName},'%')</if>
+            <if test="proDesc!=null"> and proDesc like concat('%',#{proDesc},'%')</if>
+        </where>
+    </sql>
+
+    <!--翻页+排序-->
+    <select id="findProviderList" resultType="Provider" >
+        select * from smbms_provider
+        <include refid="provider_where"/>
+        order by creationDate desc
+        limit #{pyl},#{page_size}
+    </select>
+    <!--获取总条数-->
+    <select id="findProviderListCount" resultType="int"  >
+        select count(1) from smbms_provider
+        <include refid="provider_where"/>
+    </select>
+    <!--添加供应商-->
+    <insert id="AddProvider">
+        insert into smbms_provider(proCode,proName,proDesc,creationDate) values (#{proCode},#{proName},#{proDesc},#{addtime})
+    </insert>
+    <!--修改供应商-->
+    <update id="updateProvider">
+         update smbms_provider set proCode=#{proCode},
+        proName=#{proName},proDesc=#{proDesc},
+        creationDate=#{addtime} where id=#{id}
+    </update>
+    <!--根据ID查找供应商-->
+    <select id="findProviderById" resultType="Provider">
+        select * from smbms_provider where id=#{id}
+    </select>
+
+</mapper>
